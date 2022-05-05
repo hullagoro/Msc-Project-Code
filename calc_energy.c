@@ -17,17 +17,17 @@ const uint32_t image_height = 150;
 float div_factor = 49 + (240-91); // number of images for both
 
  // torage type
-typedef uint8_t storage_type;
+typedef int storage_type;
 
 size_t read_file(const char* filename,storage_type *&buf);
 size_t write_file(const char* filename,storage_type *&buf,size_t length);
 void add(storage_type* &dst,storage_type* src1,storage_type* src2,size_t len);
 void div(storage_type* &dst,storage_type* src,size_t len);
-storage_type sum(storage_type* src,size_t len);
-storage_type sum_with_mean(storage_type* src,size_t len);
-storage_type mean(storage_type* src,size_t len);
-storage_type std_dev(storage_type* src,size_t len );
-storage_type count(storage_type* src,size_t len);
+float sum(storage_type* src,size_t len);
+float sum_with_mean(storage_type* src,size_t len);
+float mean(storage_type* src,size_t len);
+float std_dev(storage_type* src,size_t len );
+size_t count(storage_type* src,size_t len);
 
 int main(int argc,char** argv)
 {
@@ -38,6 +38,7 @@ int main(int argc,char** argv)
     exit(1);
   }
 
+  
   size_t file_size=0;
 
   //char ifname1[] = "out1.raw";
@@ -48,8 +49,8 @@ int main(int argc,char** argv)
  
   size_t ele_size = file_size / sizeof(storage_type);
 
-  storage_type pixel_count = count(buf1,ele_size);
-  printf("pixel_count : %f\n",pixel_count);
+  size_t pixel_count = count(buf1,ele_size);
+  printf("pixel_count : %d\n",pixel_count);
 
   float sum_v = sum(buf1,ele_size);
   printf("sum : %f\n",sum_v);
@@ -62,7 +63,7 @@ int main(int argc,char** argv)
 
   const float pi = 3.14159;
   //const float delta_lambda = 500; // angstrom
-  const float delta_lambda = 200.0; //50.0; // nm
+  const float delta_lambda = 50.0; //50.0; // nm
   //const float delta_lambda = 0.0075;
   const float area = 486000000;
   const float pixel_multiply = pi * delta_lambda*area; // this will be multiplyed by the pixel value after subtraction
@@ -78,13 +79,16 @@ int main(int argc,char** argv)
 }
 
 
-storage_type count(storage_type* src,size_t len)
+size_t count(storage_type* src,size_t len)
 {
-  storage_type _count=0;
+  size_t _count=0;
   for(size_t i=0;i<=len;i++)
   {
     if ( src[i] > 0 )
+    {
       _count+=1;
+      //printf(".");
+    }
   }
   return _count;
 }
@@ -123,7 +127,7 @@ size_t read_file(const char* filename,storage_type *&buf)
 }
 
 
-storage_type sum(storage_type* src,size_t len)
+float sum(storage_type* src,size_t len)
 {
   storage_type sum=0;
   for(int i=0;i<=len;i++)
@@ -133,7 +137,7 @@ storage_type sum(storage_type* src,size_t len)
   return sum; 
 }
 
-storage_type sum_with_mean(storage_type* src,size_t len)
+float sum_with_mean(storage_type* src,size_t len)
 {
 
   storage_type* buf1;
@@ -151,12 +155,12 @@ storage_type sum_with_mean(storage_type* src,size_t len)
 
 }
 
-storage_type mean(storage_type* src,size_t len)
+float mean(storage_type* src,size_t len)
 {
   return sum(src,len) / len;
 }
 
-storage_type std_dev(storage_type* src,size_t len )
+float std_dev(storage_type* src,size_t len )
 {
   float mean_v = mean(src,len);
 

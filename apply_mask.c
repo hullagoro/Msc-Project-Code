@@ -24,7 +24,7 @@ int last_file=90;
 const float pixel_subtract = 0; // 63885.0 - 4894; //4536.2;
 
 // storage type
-typedef float storage_type;
+typedef uint8_t storage_type;
 
 size_t read_file(const char* filename,storage_type *&buf);
 size_t write_file(const char* filename,storage_type *&buf,size_t length);
