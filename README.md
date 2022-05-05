@@ -23,8 +23,9 @@ which will output all the energy calculations for the mentioned files .
 
 
 NOTES TO KEEP IN MIND,
-to keep the code simple and easy to compile, the resloution of the images is hard coded to 150x150 and only to 1byte images, the original code was modified to accept all formats, which is not the best practice , 
-but that can be easily changed, this is due to lack of time to finish the report, but should show a good example of what is happeneing
+to keep the code simple and portable (smaller size to upload files on github ), the resloution of the images is kept to 150x150
+and is hard coded and only to uint8_t images, the original code accepts all formats, and is available whenever you need it.
+ this is also due to lack of time to finish the report with all assignments :( , but should show a good example of what is happeneing
 
 To view the raw files : 
 
@@ -34,7 +35,7 @@ assuming the file you wish to view is "output.raw"
 
 issue the command : magick display -depth 8 -size 150x150 gray:output.raw
 
-I have already converted the files to png in the test/png folder for ease of view
+I have already converted the files to png in the test/png folder for ease of view (including out.raw and output.raw )
 
 
 
