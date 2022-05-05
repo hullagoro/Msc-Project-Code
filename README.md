@@ -34,6 +34,8 @@ assuming the file you wish to view is "output.raw"
 
 issue the command : magick display -depth 8 -size 150x150 gray:output.raw
 
+I have already converted the files to png in the test/png folder for ease of view
+
 
 
 
